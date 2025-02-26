@@ -106,7 +106,7 @@ export const Settings = () => {
 
           {/* Success/Error Messages */}
           {successMessage && (
-            <div className="p-3 bg-green-50 text-green-700 rounded-md">
+            <div className="p-3 bg-green-50 text-green-700 rounded-md" data-test-id="success-message">
               {successMessage}
             </div>
           )}

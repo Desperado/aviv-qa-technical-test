@@ -8,6 +8,9 @@ build/
 
 # Testing
 coverage/
+playwright-report/
+allure-results/
+test-results/
 
 # Environment variables
 .env

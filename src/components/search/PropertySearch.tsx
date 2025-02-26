@@ -94,7 +94,7 @@ export const PropertySearch = () => {
         </div>
 
         <div className="md:col-span-2 lg:col-span-5 flex gap-4">
-          <Button type="submit" className="flex-1">
+          <Button type="submit" className="flex-1" data-test-id="search-properties-button">
             <Search className="w-4 h-4 mr-2" />
             Search Properties
           </Button>

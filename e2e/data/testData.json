@@ -1,0 +1,40 @@
+{
+    "users": {
+      "admin": {
+        "email": "admin@example.com",
+        "password": "Test123!",
+        "name": "Admin User",
+        "role": "admin"
+      },
+      "agent": {
+        "email": "agent@example.com",
+        "password": "Test123!",
+        "name": "Agent User",
+        "role": "agent"
+      },
+      "user": {
+        "email": "test@example.com",
+        "password": "Test123!",
+        "name": "Regular User",
+        "role": "user"
+      }
+    },
+    "invalidCredentials": {
+      "email": "invalid@example.com",
+      "password": "wrong123",
+      "name": "Invalid User"
+    },
+    "properties": {
+      "valid": {
+        "title": "Luxury Apartment",
+        "price": 500000,
+        "location": "Downtown",
+        "description": "Beautiful 3-bedroom apartment"
+      },
+      "search": {
+        "keywords": ["apartment", "house", "condo"],
+        "locations": ["Downtown", "Suburb", "Beach"]
+      }
+    }
+  }
+  

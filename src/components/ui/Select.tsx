@@ -28,6 +28,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(({
       )}
       <select
         ref={ref}
+        data-test-id="status-filter-dropdown"
         className={clsx(
           'block w-full px-3 py-2 border rounded-md shadow-sm',
           'border-gray-300 focus:border-blue-500 focus:ring-blue-500',
@@ -38,7 +39,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(({
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
-            {option.label}
+        {option.label}
           </option>
         ))}
       </select>
