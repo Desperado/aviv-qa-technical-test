@@ -10,6 +10,7 @@ build/
 coverage/
 playwright-report/
 allure-results/
+allure-report/
 test-results/
 
 # Environment variables
