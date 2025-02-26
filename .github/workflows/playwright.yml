@@ -24,13 +24,13 @@ jobs:
       run: npm run dev &
     - name: Wait for server to be ready
       run: npx wait-on http://localhost:5173
-    - name: Run Playwright tests
-      run: npx playwright test
     - name: Ensure playwright-report directory exists
       run: mkdir -p playwright-report
+    - name: Run Playwright tests
+      run: npx playwright test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
-        name: playwright-report
+        name: Upload playwright-report
         path: playwright-report/
         retention-days: 30
