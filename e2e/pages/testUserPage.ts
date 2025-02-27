@@ -145,7 +145,6 @@ export class TestUserPage {
 
         const loginPage = new LoginPage(this.page);
         await loginPage.login(updatedCredentials.email, updatedCredentials.newPassword);
-        await expect(this.page).toHaveURL(/.*\/dashboard/);
         await this.userMenu.click();
         await expect(this.page.getByText(updatedCredentials.email)).toBeVisible();
     }

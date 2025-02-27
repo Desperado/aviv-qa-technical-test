@@ -1,4 +1,3 @@
-
 import { Page, Locator, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
 
@@ -39,6 +38,11 @@ export class AgentPage {
     readonly submitPropertyButton: Locator;
     readonly userMenuIcon: Locator;
 
+    // Send Message Button
+    readonly sendMessageButton: Locator;
+    readonly messageTextarea: Locator;
+    readonly submitMessageButton: Locator;
+
     constructor(page: Page) {
         this.page = page;
         
@@ -76,6 +80,11 @@ export class AgentPage {
         this.propertyDescription = page.locator('.space-y-6 > :nth-child(4) > .w-full');
         this.submitPropertyButton = page.locator('.justify-end > .bg-blue-600');
         this.userMenuIcon = page.locator('.flex > .h-8');
+
+        // Send Message Button
+        this.sendMessageButton = page.locator('button:has-text("Send Message")').first();
+        this.messageTextarea = page.locator('textarea[name="message"]');
+        this.submitMessageButton = page.locator('button[type="submit"]:has-text("Send Message")');
     }
 
     async verifyDashboard() {
@@ -159,6 +168,11 @@ export class AgentPage {
         await expect(this.page.getByText('Description must be at least 20 characters')).toBeVisible();
     }
 
+    async goToAgent() {
+        await this.page.locator(':nth-child(5) > .inline-flex').click();
+        await this.page.locator('.border').click();
+    }
+
     async sendMessageToAgent() {
         const messageData = {
             name: 'Test User',
@@ -167,15 +181,12 @@ export class AgentPage {
             message: 'I am interested in this property and would like to schedule a viewing.'
         };
 
-        await this.page.locator(':nth-child(5) > .inline-flex').click();
-        await this.page.locator('.border').click();
-
         await this.page.locator('form.space-y-4 > :nth-child(1) > .w-full').fill(messageData.name);
         await this.page.locator('form.space-y-4 > :nth-child(2) > .w-full').fill(messageData.email);
         await this.page.locator('form.space-y-4 > :nth-child(3) > .w-full').fill(messageData.phone);
-        await this.page.locator(':nth-child(4) > .w-full').fill(messageData.message);
+        await this.messageTextarea.fill(messageData.message);
 
-        await this.page.locator('.flex > .bg-blue-600').click();
+        await this.submitMessageButton.click();
 
         await expect(this.page.getByText('Message Sent!')).toBeVisible();
         await expect(this.page.getByText('will get back to you soon')).toBeVisible();

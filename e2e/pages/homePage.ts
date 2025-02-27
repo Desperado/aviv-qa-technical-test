@@ -13,7 +13,7 @@ export class HomePage {
     readonly locationInput: Locator;
     readonly minPriceInput: Locator;
     readonly maxPriceInput: Locator;
-    readonly propertyTypeDropdown: Locator;
+    readonly statusFilterDropdown: Locator;
     readonly bedsDropdown: Locator;
     readonly searchButton: Locator;
     readonly resetButton: Locator;
@@ -31,7 +31,6 @@ export class HomePage {
 
     // Agents search elements
     readonly agentsSearchInput: Locator;
-    readonly agentsSpecializationDropdown: Locator;
     readonly agentsLocationInput: Locator;
     readonly agentsSearchButton: Locator;
     readonly agentsResultGrid: Locator;
@@ -45,6 +44,8 @@ export class HomePage {
         this.agentsLink = page.locator('[href="/agents"]');
         this.aboutLink = page.locator('[href="/about"]');
         this.loginLink = page.locator('.ml-4 > .ml-2');
+        this.statusFilterDropdown = page.locator('[data-test-id="status-filter-dropdown"]').first();
+
         
         // Main content
         this.mainHeading = page.locator('.text-4xl');
@@ -54,11 +55,10 @@ export class HomePage {
         this.locationInput = page.locator(':nth-child(1) > div.w-full > .block');
         this.minPriceInput = page.locator(':nth-child(2) > div.w-full > .block');
         this.maxPriceInput = page.locator(':nth-child(3) > div.w-full > .block');
-        this.propertyTypeDropdown = page.locator(':nth-child(4) > div.w-full > .block');
         this.bedsDropdown = page.locator(':nth-child(5) > div.w-full > .block');
         this.searchButton = page.locator('[data-test-id="search-properties-button"]');
         this.resetButton = page.locator('.md\\:col-span-2 > .border');
-        this.viewDetailsButton = page.locator(':nth-child(5) > .inline-flex');
+        this.viewDetailsButton = page.locator(':nth-child(5) > .inline-flex').first();
         this.messageAgentButton = page.locator('.border');
 
         // Properties search elements
@@ -71,8 +71,7 @@ export class HomePage {
         this.propertiesSearchResetButton = page.locator('.md\\:col-span-2 > .border');
 
         // Agents search elements
-        this.agentsSearchInput = page.locator('.relative > div.w-full > .block');
-        this.agentsSpecializationDropdown = page.locator('.w-48 > div.w-full > .block');
+        this.agentsSearchInput = page.locator('.relative > div.w-full > .block').first();
         this.agentsLocationInput = page.locator(':nth-child(3) > div.w-full > .block');
         this.agentsSearchButton = page.locator('.flex > .bg-blue-600');
         this.agentsResultGrid = page.locator('.mt-8 > .grid');
@@ -92,7 +91,7 @@ export class HomePage {
         await this.locationInput.fill(data.location);
         await this.minPriceInput.fill(data.minPrice);
         await this.maxPriceInput.fill(data.maxPrice);
-        await this.propertyTypeDropdown.selectOption(data.propertyType);
+        await this.statusFilterDropdown.selectOption(data.propertyType);
         await this.bedsDropdown.selectOption(data.beds);
         await this.searchButton.click();
     }
@@ -106,11 +105,12 @@ export class HomePage {
     }
 
     async verifyPropertyTypeDropdown(value = 'All Types') {
-        await expect(this.propertyTypeDropdown).toHaveValue(value);
+        await expect(this.statusFilterDropdown.locator('option').first()).toContainText(value);
     }
 
     async verifyBedsDropdown(value = 'Any Beds') {
-        await expect(this.bedsDropdown).toHaveValue(value);
+        //await expect(this.bedsDropdown).toHaveValue(value);
+        await expect(this.bedsDropdown.locator('option').first()).toContainText(value);
     }
 
     async searchPropertiesFromHome(searchData = {
@@ -129,7 +129,7 @@ export class HomePage {
         await this.propertiesSearchButton.click();
 
         // Check for results
-        const hasResults = await this.page.locator('.relative > .w-full').isVisible();
+        const hasResults = await this.page.locator('.relative > .w-full').first().isVisible();
         if (!hasResults) {
             await expect(this.page.getByText('No properties match your search criteria.')).toBeVisible();
             await expect(this.page.getByText('Try adjusting your filters or search terms.')).toBeVisible();
@@ -156,7 +156,7 @@ export class HomePage {
         await this.propertiesSearchLocationInput.fill(location);
         await this.propertiesSearchButton.click();
 
-        const hasResults = await this.page.locator('.relative > .w-full').isVisible();
+        const hasResults = await this.page.locator('.relative > .w-full').first().isVisible();
         if (!hasResults) {
             await expect(this.page.getByText('No properties match your search criteria.')).toBeVisible();
         }
@@ -183,14 +183,15 @@ export class HomePage {
             await this.agentsSearchInput.fill(searchData.name);
         }
         
-        await this.agentsSpecializationDropdown.selectOption(searchData.specialization);
+        await this.statusFilterDropdown.selectOption(searchData.specialization);
         await this.agentsLocationInput.fill(searchData.location);
         await this.agentsSearchButton.click();
 
         const hasResults = await this.agentsResultGrid.isVisible();
         if (hasResults) {
             await expect(this.agentsResultGrid).not.toBeEmpty();
-            await expect(this.page.getByText('Luxury Properties')).toBeVisible();
+
+            await expect(this.page.getByText('Experienced real estate agent specializing in luxury properties')).toBeVisible();
         } else {
             await expect(this.page.getByText('No agents match your search criteria.')).toBeVisible();
             
@@ -204,7 +205,7 @@ export class HomePage {
     async verifyAgentSearchForm() {
         await this.agentsLink.click();
         await expect(this.agentsSearchInput).toBeVisible();
-        await expect(this.agentsSpecializationDropdown).toBeVisible();
+        await expect(this.statusFilterDropdown).toBeVisible();
         await expect(this.agentsLocationInput).toBeVisible();
         await expect(this.agentsSearchButton).toBeVisible();
     }

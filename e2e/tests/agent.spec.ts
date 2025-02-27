@@ -91,7 +91,8 @@ test.describe('Agent Dashboard Tests', () => {
             description: 'Test property for messaging'
         };
         await agentPage.createProperty(propertyData);
-
+        
+        await agentPage.goToAgent();
         // Setup: Send message to agent
         await agentPage.sendMessageToAgent();
     });
