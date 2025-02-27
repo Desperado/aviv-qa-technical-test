@@ -1,0 +1,110 @@
+{
+    "users": {
+      "admin": {
+        "email": "admin@example.com",
+        "password": "Test123!",
+        "name": "Admin User",
+        "role": "admin"
+      },
+      "agent": {
+        "email": "agent@example.com",
+        "password": "Test123!",
+        "name": "Agent User",
+        "role": "agent"
+      },
+      "user": {
+        "email": "test@example.com",
+        "password": "Test123!",
+        "name": "Regular User",
+        "role": "user"
+      }
+    },
+    "invalidCredentials": {
+      "email": "invalid@example.com",
+      "password": "wrong123",
+      "name": "Invalid User"
+    },
+    "properties": {
+      "valid": {
+        "title": "Luxury Apartment",
+        "price": "500000",
+        "bedrooms": "3",
+        "bathrooms": "2",
+        "area": "2000",
+        "yearBuilt": "2020",
+        "address": "123 Test Street",
+        "city": "Test City",
+        "state": "Test State",
+        "zipCode": "12345",
+        "description": "A beautiful luxury apartment in the heart of the city"
+      },
+      "negative": {
+        "title": "Test Property",
+        "price": "-500000",
+        "bedrooms": "-3",
+        "bathrooms": "-2",
+        "area": "-2000",
+        "yearBuilt": "-2020",
+        "address": "123 Test Street",
+        "city": "Test City",
+        "state": "Test State",
+        "zipCode": "12345",
+        "description": "Property with negative values"
+      },
+      "search": {
+        "keywords": ["apartment", "house", "condo"],
+        "locations": ["Downtown", "Suburb", "Beach"]
+      }
+    },
+    "message": {
+      "name": "Test User",
+      "email": "test@example.com",
+      "phone": "1234567890",
+      "message": "I am interested in this property and would like to schedule a viewing."
+    },
+    "testUserData": {
+      "fullName": "Test User",
+      "email": "test@example.com",
+      "phone": "1234567890",
+      "accountType": "user",
+      "password": "Test123!"
+    },
+    "existingUserData": {
+      "fullName": "Existing User",
+      "email": "test@example.com",
+      "phone": "1234567890",
+      "accountType": "user",
+      "password": "Test123!"
+    },
+    "weakPasswordData": {
+      "fullName": "Test User",
+      "email": "newuser@example.com",
+      "phone": "1234567890",
+      "accountType": "user",
+      "password": "weak"
+    },
+    "nonUppercasePasswordData": {
+      "fullName": "Test User",
+      "email": "newuser@example.com",
+      "phone": "1234567890",
+      "accountType": "user",
+      "password": "weakweak"
+    },
+    "onlyNumberPasswordData": {
+      "fullName": "Test User",
+      "email": "newuser@example.com",
+      "phone": "1234567890",
+      "accountType": "user",
+      "password": "12345678"
+    },
+    "invalidTestData": {
+      "shortName": "A",
+      "invalidEmail": "invalid.email",
+      "invalidPhone": "abc123",
+      "shortPassword": "weak",
+      "noUppercasePassword": "weakweak",
+      "noNumberPassword": "WeakWeak",
+      "noSpecialCharacterPassword": "WeakWeak123",
+      "differentConfirmPassword": "Different123!"
+    }
+  }
