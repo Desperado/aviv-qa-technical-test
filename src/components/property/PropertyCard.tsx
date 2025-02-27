@@ -24,7 +24,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, featured }
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-md overflow-hidden ${featured ? 'border-2 border-blue-500' : ''}`} data-test-id="featured-property-card">
+    <div className={`bg-white rounded-lg shadow-md overflow-hidden ${featured ? 'border-2 border-blue-500' : ''}`}>
       <div className="relative">
         <img
           src={property.images[0]}
@@ -59,7 +59,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, featured }
         </div>
       </div>
 
-      <div className="p-4" data-test-id="property-card">
+      <div className="p-4">
         <Link to={`/properties/${property.id}`}>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">{property.title}</h3>
         </Link>

@@ -35,6 +35,7 @@ test.describe('Registration Tests', () => {
 
     });
 
+    // Skip this test as it will fail due to existing bug
     test.skip('should not allow registration with existing email', async () => {
         await registrationPage.verifyExistingAccountCantCreate();
     });

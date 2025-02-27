@@ -1,5 +1,5 @@
-
 import { Page, Locator, expect } from '@playwright/test';
+import testData from '../data/testData.json' assert { type: 'json' };
 
 export class RegistrationPage {
     readonly page: Page;
@@ -24,58 +24,6 @@ export class RegistrationPage {
         passwordSpecial: 'Password must contain at least one special character'
     };
 
-    readonly testUserData = {
-        fullName: 'Test User',
-        email: `test${Date.now()}@example.com`,
-        phone: '1234567890',
-        accountType: 'user',
-        password: 'Test123!'
-    };
-
-    readonly existingUserData = {
-        fullName: 'Existing User',
-        email: 'test@example.com',
-        phone: '1234567890',
-        accountType: 'user',
-        password: 'Test123!'
-    };
-
-    readonly weakPasswordData = {
-        fullName: 'Test User',
-        email: 'newuser@example.com',
-        phone: '1234567890',
-        accountType: 'user',
-        password: 'weak'
-    };
-
-    readonly nonUppercasePasswordData = {
-        fullName: 'Test User',
-        email: 'newuser@example.com',
-        phone: '1234567890',
-        accountType: 'user',
-        password: 'weakweak'
-    };
-
-    readonly onlyNumberPasswordData = {
-        fullName: 'Test User',
-        email: 'newuser@example.com',
-        phone: '1234567890',
-        accountType: 'user',
-        password: '12345678'
-    };
-
-    readonly invalidTestData = {
-        shortName: 'A',
-        invalidEmail: 'invalid.email',
-        invalidPhone: 'abc123',
-        shortPassword: 'weak',
-        noUppercasePassword: 'weakweak',
-        noNumberPassword: 'WeakWeak',
-        noSpecialCharacterPassword:
-            'WeakWeak123',
-        differentConfirmPassword: 'Different123!'
-    };
-
     constructor(page: Page) {
         this.page = page;
         this.fullNameInput = page.locator('.space-y-6 > :nth-child(1) > .w-full');
@@ -93,7 +41,7 @@ export class RegistrationPage {
         await this.page.goto('/register');
     }
 
-    async createAccount(userData = this.testUserData) {
+    async createAccount(userData = testData.testUserData) {
         await this.fullNameInput.fill(userData.fullName);
         await this.emailInput.fill(userData.email);
         await this.phoneInput.fill(userData.phone);
@@ -110,8 +58,8 @@ export class RegistrationPage {
 
     async verifyPasswordMustMatch() {
         await this.fillBasicInfo();
-        await this.passwordInput.fill(this.testUserData.password);
-        await this.confirmPasswordInput.fill(this.invalidTestData.differentConfirmPassword);
+        await this.passwordInput.fill(testData.testUserData.password);
+        await this.confirmPasswordInput.fill(testData.invalidTestData.differentConfirmPassword);
         await this.createAccountButton.click();
         await expect(this.page.locator('[data-test-id="user-validation-error"]'))
             .toHaveText(this.validationMessages.passwordsDoNotMatch);
@@ -127,38 +75,36 @@ export class RegistrationPage {
     }
 
     async verifyShortPassword() {
-        await this.verifyPasswordValidation({ password: this.invalidTestData.shortPassword }, this.validationMessages.passwordLength);
+        await this.verifyPasswordValidation({ password: testData.invalidTestData.shortPassword }, this.validationMessages.passwordLength);
     }
 
     async verifyPasswordUppercase() {
-        await this.verifyPasswordValidation({ password: this.invalidTestData.noUppercasePassword }, this.validationMessages.passwordUppercase);
+        await this.verifyPasswordValidation({ password: testData.invalidTestData.noUppercasePassword }, this.validationMessages.passwordUppercase);
     }
 
     async verifyPasswordOnlyNumber() {
-        await this.verifyPasswordValidation({ password: this.invalidTestData.noNumberPassword }, this.validationMessages.passwordNumber);
+        await this.verifyPasswordValidation({ password: testData.invalidTestData.noNumberPassword }, this.validationMessages.passwordNumber);
     }
 
     async verifyPasswordSpecialCharacter() {
-        await this.verifyPasswordValidation({ password: this.invalidTestData.noSpecialCharacterPassword }, this.validationMessages.passwordSpecial);
+        await this.verifyPasswordValidation({ password: testData.invalidTestData.noSpecialCharacterPassword }, this.validationMessages.passwordSpecial);
     }
 
-        
-
     async verifyExistingAccountCantCreate() {
-        await this.createAccount(this.existingUserData);
+        await this.createAccount(testData.existingUserData);
         await expect(this.page.locator('.p-3')).toContainText('Email already exists');
     }
 
     async verifyLoginAfterRegistration() {
         await expect(this.page).toHaveURL(/.*\/dashboard/);
         await this.userProfileButton.click();
-        await expect(this.page.getByText(this.testUserData.email)).toBeVisible();
+        await expect(this.page.getByText(testData.testUserData.email)).toBeVisible();
     }
 
     private async fillBasicInfo() {
-        await this.fullNameInput.fill(this.testUserData.fullName);
-        await this.emailInput.fill(this.testUserData.email);
-        await this.phoneInput.fill(this.testUserData.phone);
-        await this.accountTypeDropdown.selectOption(this.testUserData.accountType);
+        await this.fullNameInput.fill(testData.testUserData.fullName);
+        await this.emailInput.fill(testData.testUserData.email);
+        await this.phoneInput.fill(testData.testUserData.phone);
+        await this.accountTypeDropdown.selectOption(testData.testUserData.accountType);
     }
 }

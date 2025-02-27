@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../pages/homePage';
 import { AgentPage } from '../pages/agentPage';
+import testData from '../data/testData.json' assert { type: 'json' };
 
 test.describe('Home Page Tests', () => {
     let homePage: HomePage;
@@ -15,44 +16,6 @@ test.describe('Home Page Tests', () => {
     test('should verify main and sub headings', async () => {
         await homePage.verifyMainHeading();
         await homePage.verifySubHeading();
-    });
-
-    test.skip('should search and display results with default data', async ({ page }) => {
-        const propertySearchData = {
-            location: 'Los Angeles',
-            minPrice: '100000',
-            maxPrice: '5000000',
-            propertyType: 'For Sale',
-            beds: '2+ Beds'
-        };
-
-        const propertyResultData = {
-            location: '456 City Center Blvd',
-            propertyType: 'Downtown Penthouse',
-            minPrice: '100000',
-            maxPrice: '5000000'
-        };
-
-
-        await homePage.searchProperty(propertySearchData);
-        //await page.waitForURL(/\/properties/);
-        //await expect(page).toHaveURL(/\/properties/);
-        //await expect(page.locator('.property-list')).toBeVisible();
-        
-        const property = page.locator('[data-test-id="property-card"]').first();
-        await expect(property).toHaveCount(1);
-
-        await expect(property).toContainText(propertyResultData.location);
-        await expect(property).toContainText(propertyResultData.propertyType);
-        
-        /* for (const property of await properties.all()) {
-            await expect(property).toContainText(propertyResultData.location);
-            await expect(property).toContainText(propertyResultData.propertyType);
-            const priceText = await property.locator('.property-price').textContent();
-            const price = parseInt(priceText?.replace(/[^\d]/g, '') || '0');
-            expect(price).toBeGreaterThan(parseInt(propertySearchData.minPrice));
-            expect(price).toBeLessThan(parseInt(propertySearchData.maxPrice));
-        } */
     });
 
     test('should reset the search form correctly', async () => {
