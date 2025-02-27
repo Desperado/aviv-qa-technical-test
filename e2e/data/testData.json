@@ -24,17 +24,10 @@
       "password": "wrong123",
       "name": "Invalid User"
     },
-    "properties": {
-      "valid": {
-        "title": "Luxury Apartment",
-        "price": 500000,
-        "location": "Downtown",
-        "description": "Beautiful 3-bedroom apartment"
-      },
-      "search": {
-        "keywords": ["apartment", "house", "condo"],
-        "locations": ["Downtown", "Suburb", "Beach"]
-      }
+    "message": {
+      "name": "Test User",
+      "email": "test@example.com",
+      "phone": "1234567890",
+      "message": "I am interested in this property and would like to schedule a viewing."
     }
   }
-  

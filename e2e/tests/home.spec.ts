@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { HomePage } from '../pages/homePage';
 import { AgentPage } from '../pages/agentPage';
 
-test.describe('Home Page', () => {
+test.describe('Home Page Tests', () => {
     let homePage: HomePage;
     let agentPage: AgentPage;
 

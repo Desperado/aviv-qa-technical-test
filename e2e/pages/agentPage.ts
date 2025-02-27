@@ -1,5 +1,5 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { LoginPage } from '../pages/loginPage';
+import testData from '../data/testData.json' assert { type: 'json' };
 
 export class AgentPage {
     readonly page: Page;
@@ -174,12 +174,7 @@ export class AgentPage {
     }
 
     async sendMessageToAgent() {
-        const messageData = {
-            name: 'Test User',
-            email: 'test@example.com',
-            phone: '1234567890',
-            message: 'I am interested in this property and would like to schedule a viewing.'
-        };
+        const messageData = testData.message;
 
         await this.page.locator('form.space-y-4 > :nth-child(1) > .w-full').fill(messageData.name);
         await this.page.locator('form.space-y-4 > :nth-child(2) > .w-full').fill(messageData.email);

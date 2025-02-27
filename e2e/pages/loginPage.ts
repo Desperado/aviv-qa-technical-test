@@ -1,5 +1,5 @@
-
 import { Page, Locator, expect } from '@playwright/test';
+import testData from '../data/testData.json' assert { type: 'json' };
 
 export class LoginPage {
     readonly page: Page;
@@ -39,19 +39,19 @@ export class LoginPage {
     }
 
     async loginAsUser() {
-        await this.login('test@example.com', 'Test123!');
+        await this.login(testData.users.user.email, testData.users.user.password);
     }
 
     async loginAsAgent() {
-        await this.login('agent@example.com', 'Test123!');
+        await this.login(testData.users.agent.email, testData.users.agent.password);
     }
 
     async loginAsAdmin() {
-        await this.login('admin@example.com', 'Test123!');
+        await this.login(testData.users.admin.email, testData.users.admin.password);
     }
 
     async loginWithInvalidCredentials() {
-        await this.login('invalid@example.com', 'wrongpassword');
+        await this.login(testData.invalidCredentials.email, testData.invalidCredentials.password);
         await expect(this.toastError).toContainText('Invalid email or password');
     }
 
@@ -61,32 +61,32 @@ export class LoginPage {
     }
 
     async loginWithEmptyPassword() {
-        await this.emailInput.fill('test@example.com');
+        await this.emailInput.fill(testData.users.user.email);
         await this.signInButton.click();
         await expect(this.page.locator('[data-test-id="user-validation-error"]')).toBeVisible();
     }
 
     async loginWithEmptyEmail() {
-        await this.passwordInput.fill('Test123!');
+        await this.passwordInput.fill(testData.users.user.password);
         await this.signInButton.click();
         await expect(this.page.locator('[data-test-id="user-validation-error"]')).toBeVisible();
     }
 
     async loginWithWrongPassword() {
-        await this.login('test@example.com', 'wrongpassword');
+        await this.login(testData.users.user.email, 'wrongpassword');
         await expect(this.toastError).toContainText('Invalid email or password');
     }
 
     async loginWithNonExistentUser() {
-        await this.login('nonexistent@example.com', 'Test123!');
+        await this.login('nonexistent@example.com', testData.users.user.password);
         await expect(this.toastError).toContainText('Invalid email or password');
     }
 
     async verifyLoggedInUser(role: 'user' | 'agent' | 'admin') {
         const userEmails = {
-            user: 'test@example.com',
-            agent: 'agent@example.com',
-            admin: 'admin@example.com'
+            user: testData.users.user.email,
+            agent: testData.users.agent.email,
+            admin: testData.users.admin.email
         };
 
         await expect(this.page).toHaveURL(/.*\/dashboard/);
